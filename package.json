@@ -1,0 +1,36 @@
+{
+  "name": "aivideos",
+  "version": "1.0.0",
+  "description": "AI-generated promotional videos built with Remotion",
+  "main": "index.js",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion bundle",
+    "render": "remotion render src/index.ts PromoVideo out/promo-video.mp4",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gevorgmanukyandev/AIvideos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gevorgmanukyandev/AIvideos/issues"
+  },
+  "homepage": "https://github.com/gevorgmanukyandev/AIvideos#readme",
+  "dependencies": {
+    "@remotion/cli": "^4.0.526",
+    "@remotion/renderer": "^4.0.526",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.526"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "^4.0.526",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^5.7.3"
+  }
+}
