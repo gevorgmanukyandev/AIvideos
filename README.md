@@ -42,13 +42,18 @@ npm run render:retech
 - `src/RetechCommercial/` — A 25-second (750 frames @ 30fps, 1080x1920
   vertical) commercial for Retech.am, cut scene-by-scene to the client's
   second-by-second brief (hook → panic → branding → vehicle arrival →
-  repair montage → relief → brand ending/end card). See
-  [`src/RetechCommercial/clips.ts`](src/RetechCommercial/clips.ts) and
-  [`public/clips/README.md`](public/clips/README.md) for how to drop in
-  real footage — until then each scene renders as a labeled placeholder
-  card so the timing/pacing can be previewed and rendered end to end. The
-  end card is generated from the real, unaltered Retech logo at
-  `public/logo/retech-logo.png`.
+  repair montage → relief → brand ending/end card).
+  [`src/RetechCommercial/clips.ts`](src/RetechCommercial/clips.ts) is the
+  single source of truth for scene timing. The end card is generated from
+  the real, unaltered Retech logo at `public/logo/retech-logo.png`.
+- `src/RetechCommercial3D/` — The stylized 3D world the commercial is
+  rendered in: a Three.js scene (via `@remotion/three`) with a procedural
+  Yerevan street, a faceless "glossy mannequin" businessman/technician
+  (`Mannequin.tsx`), a phone prop with a procedural crack texture
+  (`Phone.tsx`), a service vehicle with the real logo texture-mapped onto
+  it (`Vehicle.tsx`), and `Scene.tsx`, which stages the camera/characters
+  for every beat. Everything renders natively — no external video
+  generator or paid API involved.
 - `remotion.config.ts` — Build/render configuration.
 
 ## Notes on this environment

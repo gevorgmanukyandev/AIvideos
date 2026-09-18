@@ -1,5 +1,12 @@
 # Retech.am — 3D animated commercial: AI video-gen prompt kit
 
+> **Status:** superseded as the default pipeline. The project now renders
+> the whole commercial natively in Remotion + Three.js
+> (`src/RetechCommercial3D/`) at zero cost, with no external tool needed.
+> This kit is kept only as an optional future upgrade path, if a paid
+> AI video generator is ever wanted for a higher-fidelity pass — it's not
+> part of the current render.
+
 Use this with a 3D/cinematic-capable AI video generator (Runway Gen-3/4,
 Kling, Pika, Luma, Veo, Sora, etc). Generate each clip separately, save it
 with the suggested filename into `public/clips/`, then tell me the

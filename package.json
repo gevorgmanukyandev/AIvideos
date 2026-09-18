@@ -22,11 +22,15 @@
   },
   "homepage": "https://github.com/gevorgmanukyandev/AIvideos#readme",
   "dependencies": {
+    "@react-three/fiber": "^9.7.0",
     "@remotion/cli": "^4.0.526",
     "@remotion/renderer": "^4.0.526",
+    "@remotion/three": "^4.0.526",
+    "@types/three": "^0.186.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "remotion": "^4.0.526"
+    "remotion": "^4.0.526",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "^4.0.526",
