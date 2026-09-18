@@ -26,6 +26,12 @@ Render the `PromoVideo` composition to an MP4 file at `out/promo-video.mp4`:
 npm run render
 ```
 
+Render the `RetechCommercial` composition to `out/retech-commercial.mp4`:
+
+```bash
+npm run render:retech
+```
+
 ## Project structure
 
 - `src/index.ts` — Remotion entry point, registers the root component.
@@ -33,6 +39,16 @@ npm run render
 - `src/PromoVideo.tsx` — A 10-second (300 frames @ 30fps, 1920x1080) sample
   promotional video with an animated title, subtitle, and color-shifting
   background gradient, ending with a fade-out.
+- `src/RetechCommercial/` — A 25-second (750 frames @ 30fps, 1080x1920
+  vertical) commercial for Retech.am, cut scene-by-scene to the client's
+  second-by-second brief (hook → panic → branding → vehicle arrival →
+  repair montage → relief → brand ending/end card). See
+  [`src/RetechCommercial/clips.ts`](src/RetechCommercial/clips.ts) and
+  [`public/clips/README.md`](public/clips/README.md) for how to drop in
+  real footage — until then each scene renders as a labeled placeholder
+  card so the timing/pacing can be previewed and rendered end to end. The
+  end card is generated from the real, unaltered Retech logo at
+  `public/logo/retech-logo.png`.
 - `remotion.config.ts` — Build/render configuration.
 
 ## Notes on this environment

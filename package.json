@@ -7,6 +7,7 @@
     "start": "remotion studio",
     "build": "remotion bundle",
     "render": "remotion render src/index.ts PromoVideo out/promo-video.mp4",
+    "render:retech": "remotion render src/index.ts RetechCommercial out/retech-commercial.mp4",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
