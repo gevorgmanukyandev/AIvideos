@@ -94,6 +94,29 @@ export const Vehicle: React.FC<VehicleProps> = ({
 				/>
 			</mesh>
 
+			{/* headlights */}
+			{[0.6, -0.6].map((x) => (
+				<mesh key={x} position={[x, 0.55, 2.11]}>
+					<boxGeometry args={[0.32, 0.16, 0.02]} />
+					<meshStandardMaterial
+						color="#fff8e0"
+						emissive="#fff3c4"
+						emissiveIntensity={1.1}
+					/>
+				</mesh>
+			))}
+			{/* taillights */}
+			{[0.75, -0.75].map((x) => (
+				<mesh key={x} position={[x, 0.6, -2.11]}>
+					<boxGeometry args={[0.22, 0.14, 0.02]} />
+					<meshStandardMaterial
+						color="#c81e1e"
+						emissive="#a01414"
+						emissiveIntensity={0.7}
+					/>
+				</mesh>
+			))}
+
 			{/* wheels */}
 			{[
 				[0.95, 0.35, 1.3],
@@ -101,10 +124,16 @@ export const Vehicle: React.FC<VehicleProps> = ({
 				[0.95, 0.35, -1.5],
 				[-0.95, 0.35, -1.5],
 			].map((p, i) => (
-				<mesh key={i} position={p as [number, number, number]} rotation={[0, 0, Math.PI / 2]} castShadow>
-					<cylinderGeometry args={[0.35, 0.35, 0.28, 20]} />
-					<meshStandardMaterial color="#141414" roughness={0.6} />
-				</mesh>
+				<group key={i} position={p as [number, number, number]} rotation={[0, 0, Math.PI / 2]}>
+					<mesh castShadow>
+						<cylinderGeometry args={[0.35, 0.35, 0.28, 20]} />
+						<meshStandardMaterial color="#141414" roughness={0.75} />
+					</mesh>
+					<mesh position={[0, 0, 0.15]}>
+						<cylinderGeometry args={[0.19, 0.19, 0.02, 16]} />
+						<meshStandardMaterial color="#9aa0a8" roughness={0.35} metalness={0.7} />
+					</mesh>
+				</group>
 			))}
 		</group>
 	);

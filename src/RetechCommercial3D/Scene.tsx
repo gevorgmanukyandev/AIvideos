@@ -386,8 +386,8 @@ export const Scene: React.FC = () => {
 						position={businessman.pos}
 						rotationY={businessman.rotY}
 						pose={businessman.pose}
-						bodyColor="#22345c"
-						accentColor="#2f4a86"
+						bodyColor="#1c2947"
+						accentColor="#e9edf3"
 					/>
 				) : null}
 				{technician ? (
@@ -395,8 +395,9 @@ export const Scene: React.FC = () => {
 						position={technician.pos}
 						rotationY={technician.rotY}
 						pose={technician.pose}
-						bodyColor="#3d5b78"
+						bodyColor="#2e4258"
 						accentColor="#4fc3ff"
+						skinTone="#b5875f"
 					/>
 				) : null}
 				{phone ? (
