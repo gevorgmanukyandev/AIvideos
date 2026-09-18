@@ -3,6 +3,7 @@ import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import {CameraRig, type CameraState} from './CameraRig';
 import {World} from './World';
+import {ImpactBurst} from './ImpactBurst';
 import {Mannequin, idlePose, type MannequinPose} from './Mannequin';
 import {Phone} from './Phone';
 import {Vehicle} from './Vehicle';
@@ -34,6 +35,16 @@ const CAMERA_DEFAULT: CameraState = {
 	fov: 45,
 };
 
+const PHONE_IMPACT_POINT: [number, number, number] = [0.15, 0.02, -1];
+// Fall duration is compressed to reach the ground exactly at IMPACT_T (see
+// segment B below); precomputed here so the burst effect and the fall
+// itself never drift apart.
+const FALL_START_T = 0.62;
+const FALL_END_T = 0.85;
+const IMPACT_T = FALL_START_T + (FALL_END_T - FALL_START_T) / 1.3;
+const IMPACT_FRAME =
+	sceneRanges.hook.start + Math.round(IMPACT_T * (sceneRanges.hook.duration - 1));
+
 export const Scene: React.FC = () => {
 	const frame = useCurrentFrame();
 
@@ -55,9 +66,9 @@ export const Scene: React.FC = () => {
 	// ---------- HOOK (0–89): rushing, phone falls & cracks ----------
 	if (inRange(frame, 'hook')) {
 		const {t} = local(frame, 'hook');
-		if (t < 0.62) {
+		if (t < FALL_START_T) {
 			// segment A: wide tracking shot, walking fast
-			const walkT = t / 0.62;
+			const walkT = t / FALL_START_T;
 			const z = lerp(6, -1, walkT);
 			businessman = {
 				pos: [0.4, 0, z],
@@ -70,17 +81,35 @@ export const Scene: React.FC = () => {
 				fov: 40,
 			};
 			phone = null;
-		} else if (t < 0.85) {
+		} else if (t < FALL_END_T) {
 			// segment B: crash-zoom on the falling phone, slow motion
-			const fallT = clamp01((t - 0.62) / (0.85 - 0.62));
-			const y = lerp(1.3, 0.02, Math.min(1, fallT * 1.3));
-			const spin = fallT * 9;
+			let y: number;
+			let spin: number;
+			let crack: number;
+			let screen: number;
+			if (t < IMPACT_T) {
+				const fallT = clamp01((t - FALL_START_T) / (IMPACT_T - FALL_START_T));
+				y = lerp(1.3, PHONE_IMPACT_POINT[1], fallT);
+				spin = fallT * 9;
+				crack = 0;
+				screen = 0.5;
+			} else {
+				// just hit the ground: a tiny decaying bounce, then the
+				// crack ramps in over the following few frames
+				const afterT = clamp01((t - IMPACT_T) / (FALL_END_T - IMPACT_T));
+				const bounce =
+					Math.max(0, Math.sin(afterT * Math.PI)) * 0.05 * Math.max(0, 1 - afterT * 3);
+				y = PHONE_IMPACT_POINT[1] + bounce;
+				spin = 9 + afterT * 1.5;
+				crack = clamp01(afterT / 0.25);
+				screen = lerp(0.5, 0, clamp01(afterT / 0.3));
+			}
 			phone = {
-				pos: [0.15, y, -1],
+				pos: [PHONE_IMPACT_POINT[0], y, PHONE_IMPACT_POINT[2]],
 				rot: [spin, spin * 0.6, 0],
 				scale: 1.4,
-				crack: fallT > 0.92 ? 1 : 0,
-				screen: fallT > 0.92 ? 0 : 0.5,
+				crack,
+				screen,
 			};
 			businessman = {
 				pos: [0.4, 0, -1],
@@ -407,6 +436,12 @@ export const Scene: React.FC = () => {
 						scale={phone.scale}
 						crackAmount={phone.crack}
 						screenOn={phone.screen}
+					/>
+				) : null}
+				{frame - IMPACT_FRAME >= -1 && frame - IMPACT_FRAME <= 16 ? (
+					<ImpactBurst
+						position={PHONE_IMPACT_POINT}
+						sinceImpact={frame - IMPACT_FRAME}
 					/>
 				) : null}
 			</ThreeCanvas>
